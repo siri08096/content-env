@@ -1,0 +1,26 @@
+name: content-strategy-env
+
+entry_point: environment:ContentEnv
+
+description: AI environment for simulating content strategy decisions
+
+tasks:
+  - name: grow_followers
+  - name: high_engagement
+  - name: balanced_strategy
+
+observation_space:
+  type: dict
+  properties:
+    followers: int
+    engagement: float
+    fatigue: int
+    day: int
+
+action_space:
+  type: discrete
+  actions:
+    - post_reel
+    - post_carousel
+    - take_break
+    - skip
