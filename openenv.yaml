@@ -16,7 +16,7 @@ observation_space:
     engagement: float
     fatigue: int
     day: int
-
+    platform: string
 action_space:
   type: discrete
   actions:
