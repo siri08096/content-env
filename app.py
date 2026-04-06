@@ -22,3 +22,12 @@ def step():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=7860)
+@app.route("/")
+def home():
+    return {
+        "message": "Content Strategy AI Environment is running 🚀",
+        "endpoints": {
+            "reset": "/reset",
+            "step": "/step"
+        }
+    }

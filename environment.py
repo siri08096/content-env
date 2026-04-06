@@ -53,5 +53,8 @@ class ContentEnv:
         self.state["day"] += 1
 
         done = self.state["day"] > 10
+        import random
 
+        if random.random() < 0.1:
+            reward -= 0.2  # algorithm change
         return self.state, round(reward, 2), done
