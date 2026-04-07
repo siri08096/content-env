@@ -3,12 +3,19 @@ from graders import grade_followers, grade_engagement, grade_balance
 
 env = ContentEnv()
 
-print("[START]")
+task_name = "content_strategy"
+env_name = "content-env"
+model_name = "rule-based"
 
 state = env.reset()
 
-for step in range(10):
+print(f"[START] task={task_name} env={env_name} model={model_name}", flush=True)
 
+rewards = []
+steps = 0
+done = False
+
+for step in range(1, 11):
     if state["fatigue"] > 40:
         action = "take_break"
     elif state["engagement"] < 2:
@@ -18,13 +25,31 @@ for step in range(10):
 
     state, reward, done = env.step(action)
 
-    print(f"[STEP] action={action} reward={reward}")
+    reward = reward or 0.0
+    rewards.append(reward)
+    steps = step
+
+    print(
+        f"[STEP] step={step} action={action} reward={reward:.2f} done={str(done).lower()} error=null",
+        flush=True
+    )
 
     if done:
         break
 
-print("[END]")
+# Calculate final score
+score = (
+    grade_followers(state) +
+    grade_engagement(state) +
+    grade_balance(state)
+) / 3.0
 
-print("Followers Score:", grade_followers(state))
-print("Engagement Score:", grade_engagement(state))
-print("Balance Score:", grade_balance(state))
+score = min(max(score, 0.0), 1.0)
+success = score > 0.3
+
+rewards_str = ",".join(f"{r:.2f}" for r in rewards)
+
+print(
+    f"[END] success={str(success).lower()} steps={steps} score={score:.2f} rewards={rewards_str}",
+    flush=True
+)
