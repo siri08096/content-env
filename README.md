@@ -1,3 +1,16 @@
+---
+title: Content Strategy AI
+emoji: 🚀
+colorFrom: blue
+colorTo: purple
+sdk: gradio
+app_file: app.py
+pinned: false
+---
+
+# Content Strategy AI Environment
+
+This is a custom AI environment for simulating content strategy decisions.
  Content Strategy AI Environment (OpenEnv)
 
  Overview
