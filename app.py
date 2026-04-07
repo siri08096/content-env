@@ -60,13 +60,5 @@ with gr.Blocks() as demo:
     break_btn.click(fn=take_break, outputs=state_output)
 
 if __name__ == "__main__":
-    import threading
-
-    def run_flask():
-        app.run(host="0.0.0.0", port=7860)
-
-    threading.Thread(target=run_flask).start()
-    demo.launch(server_name="0.0.0.0", server_port=7860)
-
-
+    demo.launch()
 
