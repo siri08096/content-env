@@ -3,7 +3,7 @@ title: Content Strategy AI
 emoji: 🚀
 colorFrom: blue
 colorTo: purple
-sdk: gradio
+sdk: docker
 app_file: app.py
 pinned: false
 ---
