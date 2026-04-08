@@ -4,8 +4,12 @@ version = "0.1.0"
 description = "Content Strategy AI Environment"
 requires-python = ">=3.10"
 dependencies = [
-    "flask"
+    "flask",
+    "openenv==0.1.13"
 ]
+
+[project.scripts]
+server = "app:app"
 
 [tool.setuptools]
 packages = []
