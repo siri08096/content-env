@@ -14,7 +14,8 @@ def reset():
 
 @app.route("/step", methods=["POST"])
 def step():
-    action = request.json.get("action")
+    data = request.get_json()
+    action = data.get("action")
     state, reward, done = env.step(action)
     return jsonify({
         "state": state,
