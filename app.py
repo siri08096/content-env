@@ -1,13 +1,14 @@
 from flask import Flask, request, jsonify
 from environment import ContentEnv
 import gradio as gr
+import threading
 
 app = Flask(__name__)
 env = ContentEnv()
 
 @app.route("/")
 def home():
-    return "API is running"
+    return "API running"
 
 @app.route("/reset", methods=["GET", "POST"])
 def reset():
@@ -32,20 +33,16 @@ def ui_step(action):
     state, reward, done = env.step(action)
     return state
 
-with gr.Blocks() as demo:
-    output = gr.JSON()
-    with gr.Row():
-        reset_btn = gr.Button("Reset")
-        reel_btn = gr.Button("Post Reel")
-        carousel_btn = gr.Button("Post Carousel")
-        break_btn = gr.Button("Take Break")
-
-    reset_btn.click(fn=ui_reset, outputs=output)
-    reel_btn.click(fn=lambda: ui_step("post_reel"), outputs=output)
-    carousel_btn.click(fn=lambda: ui_step("post_carousel"), outputs=output)
-    break_btn.click(fn=lambda: ui_step("take_break"), outputs=output)
-
-app = gr.mount_gradio_app(app, demo, path="/")
+def run_gradio():
+    with gr.Blocks() as demo:
+        output = gr.JSON()
+        with gr.Row():
+            gr.Button("Reset").click(fn=ui_reset, outputs=output)
+            gr.Button("Post Reel").click(fn=lambda: ui_step("post_reel"), outputs=output)
+            gr.Button("Post Carousel").click(fn=lambda: ui_step("post_carousel"), outputs=output)
+            gr.Button("Take Break").click(fn=lambda: ui_step("take_break"), outputs=output)
+    demo.launch(server_name="0.0.0.0", server_port=7861, share=False)
 
 if __name__ == "__main__":
+    threading.Thread(target=run_gradio).start()
     app.run(host="0.0.0.0", port=7860)
