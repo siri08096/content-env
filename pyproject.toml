@@ -1,0 +1,11 @@
+[project]
+name = "content-env"
+version = "0.1.0"
+description = "Content Strategy AI Environment"
+dependencies = [
+    "flask"
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
